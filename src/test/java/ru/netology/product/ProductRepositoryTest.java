@@ -57,6 +57,20 @@ public class ProductRepositoryTest {
     }
 
     @Test
+    public void removeByIdNegative() {
+        repository.save(book_1);
+        repository.save(book_2);
+        repository.save(book_3);
+        repository.save(smartphone_1);
+        repository.save(smartphone_2);
+
+        Assertions.assertThrows(NotFoundException.class, () -> {
+            repository.removeById(-999);
+        });
+
+    }
+
+    @Test
     public void removeByIdFew() {
         repository.save(book_1);
         repository.save(book_2);
@@ -90,5 +104,31 @@ public class ProductRepositoryTest {
         Product[] expected = {};
         Product[] actual = repository.findAll();
         Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void findByIdNegative() {
+        repository.save(book_1);
+        repository.save(book_2);
+        repository.save(book_3);
+        repository.save(smartphone_1);
+        repository.save(smartphone_2);
+
+        Product expected = null;
+        Product actual = repository.findById(999);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void findByIdPositive() {
+        repository.save(book_1);
+        repository.save(book_2);
+        repository.save(book_3);
+        repository.save(smartphone_1);
+        repository.save(smartphone_2);
+
+        Product expected = smartphone_1;
+        Product actual = repository.findById(444);
+        Assertions.assertEquals(expected, actual);
     }
 }

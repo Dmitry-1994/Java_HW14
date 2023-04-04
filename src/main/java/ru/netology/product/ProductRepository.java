@@ -17,6 +17,11 @@ public class ProductRepository {
     }
 
     public void removeById(int id) {
+        if (findById(id) == null) {
+            throw new NotFoundException(
+                    "Товар с даным ID не найден: " + id
+            );
+        }
         Product[] tmp = new Product[products.length - 1];
         int copyIndex = 0;
         for (Product product : products) {
@@ -26,5 +31,14 @@ public class ProductRepository {
             }
         }
         products = tmp;
+    }
+
+    public Product findById(int id) {
+        for (Product product : products) {
+            if (product.getId() == id) {
+                return product;
+            }
+        }
+        return null;
     }
 }

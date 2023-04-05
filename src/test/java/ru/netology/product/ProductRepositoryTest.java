@@ -42,6 +42,16 @@ public class ProductRepositoryTest {
     }
 
     @Test
+    public void saveByIdNegative() {
+        repository.save(book_1);
+        repository.save(book_2);
+
+        Assertions.assertThrows(AlreadyExistsException.class, () -> {
+            repository.save(book_2);
+        });
+    }
+
+    @Test
     public void removeByIdOne() {
         repository.save(book_1);
         repository.save(book_2);
